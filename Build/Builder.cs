@@ -88,7 +88,8 @@ namespace Bygg.Build
 
 		private void BuildRootUnit()
 		{
-			_rootUnit = new CodeUnit(
+			_rootUnit = new CodeUnit
+			(
 				_options.RootDependency, 
 				_namespaceDependency, 
 				_options.DependencyParser
@@ -99,7 +100,12 @@ namespace Bygg.Build
 
 		private void SortDependencyGraph()
 		{
-			var sort = new TopologicalSort<CodeUnit>(_rootUnit, parent => parent.Dependencies);
+			var sort = new TopologicalSort<CodeUnit>
+			(
+				_rootUnit, 
+				parent => parent.Dependencies
+			);
+			
 			_orderedUnitList = sort.Sort();
 		}
 
@@ -114,11 +120,12 @@ namespace Bygg.Build
 
 		private void GetNamespaceDependency()
 		{
-			var rootDependencies = _options
-				.DependencyParser.Parse(
-					SourceCodeReader
-						.GetReaderFor(_options.RootDependency)
-						.ReadLines());
+			var rootDependencies = _options.DependencyParser.Parse
+			(
+				SourceCodeReader
+					.GetReaderFor(_options.RootDependency)
+					.ReadLines()
+			);
 
 			var nsDependency = rootDependencies
 				.FirstOrDefault(d => d.IsNsDependency);
