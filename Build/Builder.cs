@@ -48,10 +48,13 @@ namespace Bygg.Build
 
 			if (_options.OutputCombiner == null)
 			{
-				_options.OutputCombiner = 
-					new OutputCombiner(
-						new JsCommonsTransform(
-							new OutputFormatter()));
+				_options.OutputCombiner = new OutputCombiner
+				(
+					new JsCommonsTransform
+					(
+						new OutputFormatter()
+					)
+				);
 			}
 
 			if (_options.Minifier == null)
