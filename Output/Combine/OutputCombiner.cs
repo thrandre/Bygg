@@ -21,13 +21,18 @@ namespace Bygg.Output.Combine
 
 			foreach (var unit in units)
 			{
-				code.AppendLine(
-					_transform.Transform(
+				code.AppendLine
+				(
+					_transform.Transform
+					(
 						unit.CodeLines,
 						ns, 
-						unit.CurrentDependency.IsNsDependency
-						|| unit.IsLibrary)
-					);
+						(
+							unit.CurrentDependency.IsNsDependency
+							|| unit.IsLibrary
+						)
+					)
+				);
 			}
 
 			return code.ToString();
