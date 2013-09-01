@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Optimization;
@@ -9,11 +10,6 @@ namespace Bygg.Bundle
 {
 	public class ByggBundler : IBundleTransform
 	{
-		public ByggBundler()
-		{
-			
-		}
-
 		public void Process(BundleContext context, BundleResponse response)
 		{
 			if (response.Files.Count() != 1)
@@ -22,7 +18,8 @@ namespace Bygg.Bundle
 			}
 
 			var rootFile = response.Files.First();
-			var rootDependency = new FileDependency(rootFile.FullName);
+			var rootFilePath = HttpContext.Current.Server.MapPath(rootFile.IncludedVirtualPath);
+			var rootDependency = new FileDependency(rootFilePath);
 
 			var builder = new Builder(
 				new BuilderOptions
@@ -32,10 +29,10 @@ namespace Bygg.Bundle
 
 			builder.ProgressEvent += (sender, args) => Debug.WriteLine(args.Message);
 
-			var content = builder.Build(true);
+			var content = builder.Build();
 
 			response.ContentType = "text/javascript";
-			response.Cacheability = HttpCacheability.NoCache;
+			response.Cacheability = HttpCacheability.Public;
 			response.Content = content;
 		}
 	}
