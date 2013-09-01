@@ -34,31 +34,11 @@ namespace Bygg.Build
 				throw new ArgumentException("A root dependency must be provided.");
 			}
 
-			if (_options.DependencyParser == null)
-			{
-				_options.DependencyParser = new DependencyParser(Settings.DependencyMatchPattern);
-			}
-
-			if (_options.NamespaceParser == null)
-			{
-				_options.NamespaceParser = new NamespaceParser(Settings.NamespaceMatchPattern);
-			}
-
-			if (_options.OutputCombiner == null)
-			{
-				_options.OutputCombiner = new OutputCombiner();
-			}
-
-			if (_options.Minifier == null)
-			{
-				_options.Minifier = new Minifier();
-			}
-
 			CodeUnit.Resolved += (sender, args) => 
 				OnProgress(String.Format("Resolved {0}", args.Resolved));
 		}
 
-		public string Build(bool minify = false)
+		public string Build()
 		{
 			GetNamespaceDependency();
 			BuildRootUnit();
@@ -66,7 +46,7 @@ namespace Bygg.Build
 			GetNamespace();
 			CombineOutput();
 
-			if (minify)
+			if (_options.Minifier != null)
 			{
 				OnProgress("Minifying");
 				_output = _options.Minifier.Minify(_output);

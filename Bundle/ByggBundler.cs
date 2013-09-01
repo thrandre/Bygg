@@ -10,6 +10,13 @@ namespace Bygg.Bundle
 {
 	public class ByggBundler : IBundleTransform
 	{
+		private readonly ByggBundlerOptions _options;
+
+		public ByggBundler(ByggBundlerOptions options)
+		{
+			_options = options;
+		}
+
 		public void Process(BundleContext context, BundleResponse response)
 		{
 			if (response.Files.Count() != 1)
@@ -19,13 +26,10 @@ namespace Bygg.Bundle
 
 			var rootFile = response.Files.First();
 			var rootFilePath = HttpContext.Current.Server.MapPath(rootFile.IncludedVirtualPath);
-			var rootDependency = new FileDependency(rootFilePath);
+			
+			_options.RootDependency = new FileDependency(rootFilePath);
 
-			var builder = new Builder(
-				new BuilderOptions
-					{
-						RootDependency = rootDependency
-					});
+			var builder = new Builder(_options);
 
 			builder.ProgressEvent += (sender, args) => Debug.WriteLine(args.Message);
 

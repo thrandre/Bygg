@@ -15,17 +15,7 @@ namespace Bygg.Input
 		public abstract IList<string> ReadLines();
 
 		public static SourceCodeReader GetReaderFor(Dependency dependency)
-		{
-			if (dependency is FakeDependency)
-			{
-				return new FakeReader(dependency as FakeDependency);	
-			}
-			
-			if (dependency is WebDependency)
-			{
-				return new WebReader(dependency.Path.Path);
-			}
-			
+		{	
 			return new FileReader(dependency.Path.Path);
 		}
 	}

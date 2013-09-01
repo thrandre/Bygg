@@ -68,9 +68,8 @@
     <Compile Include="Build\Builder.cs" />
     <Compile Include="Build\BuilderOptions.cs" />
     <Compile Include="Build\ProgressEventHandlerArgs.cs" />
+    <Compile Include="Bundle\ByggBundlerOptions.cs" />
     <Compile Include="Bundle\ByggBundler.cs" />
-    <Compile Include="Dependencies\FakeDependency.cs" />
-    <Compile Include="Input\FakeReader.cs" />
     <Compile Include="Units\CodeUnit.cs" />
     <Compile Include="Sort\CyclicReferenceException.cs" />
     <Compile Include="Dependencies\Dependency.cs" />
@@ -94,9 +93,6 @@
     <Compile Include="Input\FileReader.cs" />
     <Compile Include="Sort\TopologicalNode.cs" />
     <Compile Include="Sort\TopologicalSort.cs" />
-    <Compile Include="Dependencies\WebDependency.cs" />
-    <Compile Include="Dependencies\Path\WebDependencyPath.cs" />
-    <Compile Include="Input\WebReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

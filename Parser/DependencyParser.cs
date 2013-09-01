@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Bygg.Dependencies;
 
@@ -29,34 +30,18 @@ namespace Bygg.Parser
 					continue;
 				}
 
-				var isNsDependency = match.Groups[1].Value == "ns";
-				var dependencyPath = match.Groups[2].Value;
+				var path = match.Groups[1].Value;
+				var isNamespaceDependency = false;
 
-				var isFakeDependency = !Regex.Match(dependencyPath, FileMatchPattern).Success;
-
-				if (isFakeDependency)
+				if (match.Groups[3].Success)
 				{
-					dependencies.Add
-						(
-							new FakeDependency(new List<string>{ dependencyPath })
-								{
-									IsNamespaceDependency = isNsDependency
-								}
-						);
+					isNamespaceDependency = Boolean.Parse(match.Groups[4].Value);
 				}
-				else
-				{
-					var isWebDependency = Regex.Match(dependencyPath, UrlMatchPattern).Success;
 
-					if (isWebDependency)
-					{
-						dependencies.Add(new WebDependency(dependencyPath) { IsNamespaceDependency = isNsDependency });
-					}
-					else
-					{
-						dependencies.Add(new FileDependency(dependencyPath) { IsNamespaceDependency = isNsDependency });
-					}	
-				}
+				dependencies.Add
+					(
+						new FileDependency(path, isNamespaceDependency)
+					);
 			}
 
 			return dependencies;
