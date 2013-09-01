@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
@@ -9,9 +8,9 @@ namespace Bygg.Input
 	{
 		public WebReader(string path) : base(path) {}
 
-		public override IList<String> ReadLines()
+		public override IList<string> ReadLines()
 		{
-			String code;
+			string code;
 			using (var client = new WebClient())
 			{
 				code = client.DownloadString(Path);

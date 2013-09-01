@@ -7,12 +7,12 @@ namespace Bygg.Output
 	{
 		private readonly string _path;
 
-		public FileWriter(String path)
+		public FileWriter(string path)
 		{
 			_path = path;
 		}
 
-		public void Write(String code)
+		public void Write(string code)
 		{
 			File.WriteAllText(_path, code);
 		}

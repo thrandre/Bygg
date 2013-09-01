@@ -6,7 +6,7 @@ namespace Bygg.Build
 	{
 		public string Message { get; set; }
 
-		public ProgressEventHandlerArgs(String message)
+		public ProgressEventHandlerArgs(string message)
 		{
 			Message = message;
 		}

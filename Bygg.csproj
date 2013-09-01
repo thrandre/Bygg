@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Bygg</RootNamespace>
     <AssemblyName>Bygg</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -64,6 +64,8 @@
     <Compile Include="Build\BuilderOptions.cs" />
     <Compile Include="Build\ProgressEventHandlerArgs.cs" />
     <Compile Include="Bundle\ByggBundler.cs" />
+    <Compile Include="Dependencies\FakeDependency.cs" />
+    <Compile Include="Input\FakeReader.cs" />
     <Compile Include="Units\CodeUnit.cs" />
     <Compile Include="Sort\CyclicReferenceException.cs" />
     <Compile Include="Dependencies\Dependency.cs" />
@@ -80,7 +82,7 @@
     <Compile Include="Output\Minify\Minifier.cs" />
     <Compile Include="Parser\NamespaceParser.cs" />
     <Compile Include="Output\Combine\OutputCombiner.cs" />
-    <Compile Include="Output\Format\OutputFormatter.cs" />
+    <Compile Include="Output\Format\StandardIndentationFormatter.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Input\SourceCodeReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

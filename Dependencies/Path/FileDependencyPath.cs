@@ -5,14 +5,14 @@ namespace Bygg.Dependencies.Path
 {
 	public class FileDependencyPath : DependencyPath
 	{
-		public FileDependencyPath(String path) : base(path) {}
+		public FileDependencyPath(string path) : base(path) {}
 
-		public override String Directory
+		public override string Directory
 		{
 			get
 			{
 				var directoryInfo = new FileInfo(Path).Directory;
-				return directoryInfo != null ? directoryInfo.FullName : String.Empty;
+				return directoryInfo != null ? directoryInfo.FullName : string.Empty;
 			}
 		}
 

@@ -7,16 +7,17 @@ namespace Bygg.Parser
 {
 	public class DependencyParser
 	{
-		private const String UrlMatchPattern = @"http[s]?\://";
+		private const string UrlMatchPattern = @"http[s]?\://";
+		private const string FileMatchPattern = @"\.js$";
+
+		private readonly string _dependencyMatchPattern;
 		
-		private readonly String _dependencyMatchPattern;
-		
-		public DependencyParser(String dependencyMatchPattern)
+		public DependencyParser(string dependencyMatchPattern)
 		{
 			_dependencyMatchPattern = dependencyMatchPattern;
 		}
 
-		public IList<Dependency> Parse(IList<String> codeLines)
+		public IList<Dependency> Parse(IEnumerable<string> codeLines)
 		{
 			var dependencies = new List<Dependency>();
 			
@@ -24,20 +25,38 @@ namespace Bygg.Parser
 			{
 				var match = Regex.Match(codeLine, _dependencyMatchPattern);
 				
-				if (!match.Success) continue;
+				if (!match.Success)
+				{
+					continue;
+				}
 
 				var isNsDependency = match.Groups[1].Value == "ns";
 				var dependencyPath = match.Groups[2].Value;
-				
-				var isWebDependency = Regex.Match(dependencyPath, UrlMatchPattern).Success;
 
-				if (isWebDependency)
+				var isFakeDependency = !Regex.Match(dependencyPath, FileMatchPattern).Success;
+
+				if (isFakeDependency)
 				{
-					dependencies.Add(new WebDependency(dependencyPath){ IsNsDependency = isNsDependency });
+					dependencies.Add
+						(
+							new FakeDependency(new List<string>{ dependencyPath })
+								{
+									IsNamespaceDependency = isNsDependency
+								}
+						);
 				}
 				else
 				{
-					dependencies.Add(new FileDependency(dependencyPath) { IsNsDependency = isNsDependency });
+					var isWebDependency = Regex.Match(dependencyPath, UrlMatchPattern).Success;
+
+					if (isWebDependency)
+					{
+						dependencies.Add(new WebDependency(dependencyPath) { IsNamespaceDependency = isNsDependency });
+					}
+					else
+					{
+						dependencies.Add(new FileDependency(dependencyPath) { IsNamespaceDependency = isNsDependency });
+					}	
 				}
 			}
 

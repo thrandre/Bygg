@@ -5,6 +5,6 @@ namespace Bygg.Output.Transform
 {
 	public interface IOutputTransform
 	{
-		String Transform(IList<String> codeLines, String ns, bool isNsDependency);
+		IList<string> Transform(IList<string> codeLines, string ns);
 	}
 }

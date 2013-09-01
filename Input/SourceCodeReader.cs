@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Bygg.Dependencies;
 
 namespace Bygg.Input
 {
 	public abstract class SourceCodeReader
 	{
-		public String Path { get; private set; }
+		public string Path { get; private set; }
 
-		protected SourceCodeReader(String path)
+		protected SourceCodeReader(string path)
 		{
 			Path = path;
 		}
@@ -17,6 +16,11 @@ namespace Bygg.Input
 
 		public static SourceCodeReader GetReaderFor(Dependency dependency)
 		{
+			if (dependency is FakeDependency)
+			{
+				return new FakeReader(dependency as FakeDependency);	
+			}
+			
 			if (dependency is WebDependency)
 			{
 				return new WebReader(dependency.Path.Path);

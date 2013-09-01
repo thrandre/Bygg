@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Bygg
+﻿namespace Bygg
 {
-	public class Settings
+	public static class Settings
 	{
-		public const String NamespaceMatchPattern = @"(?:var)?[\s]?(.*?)[\s]?=[\s]?(?:.*?);";
-		public const String DependencyMatchPattern = @"///[\s]?(dep|ns)[\s]?:[\s]?((.*?)\.js)";
+		public const string NamespaceMatchPattern = @"(?:var)?[\s]?(.*?)[\s]?=[\s]?(?:.*?);";
+		public const string DependencyMatchPattern = @"///[\s]?(dep|ns)[\s]?:[\s]?((.*?)\.js)";
 	}
 }

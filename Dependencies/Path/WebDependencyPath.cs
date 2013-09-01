@@ -6,12 +6,12 @@ namespace Bygg.Dependencies.Path
 	{
 		public WebDependencyPath(string path) : base(path) {}
 
-		public override String Directory
+		public override string Directory
 		{
 			get { return new Uri(Path).AbsoluteUri; }
 		}
 
-		public override void MakePathAbsolute(String parentPath)
+		public override void MakePathAbsolute(string parentPath)
 		{
 		}
 	}

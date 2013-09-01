@@ -1,36 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Bygg.Output.Format;
 using Bygg.Output.Transform;
 using Bygg.Units;
 
 namespace Bygg.Output.Combine
 {
+	public class OutputCombinerOptions
+	{
+		public IOutputTransform UnitTransform { get; set; }
+		public IOutputTransform CodeTransform { get; set; }
+		public IOutputFormatter OutputFormatter { get; set; }
+	}
+
 	public class OutputCombiner : IOutputCombiner
 	{
-		private readonly IOutputTransform _transform;
+		private readonly OutputCombinerOptions _options;
 
-		public OutputCombiner(IOutputTransform transform)
+		public OutputCombiner(OutputCombinerOptions options = null)
 		{
-			_transform = transform;
+			_options = options ?? new OutputCombinerOptions();
 		}
 
-		public String Combine(IList<CodeUnit> units, String ns)
+		public string Combine(IEnumerable<CodeUnit> units, string ns)
 		{
-			var code = new StringBuilder();
+			var code = new List<string>();
 
 			foreach (var unit in units)
 			{
-				code.AppendLine(
-					_transform.Transform(
-						unit.CodeLines,
-						ns, 
-						unit.CurrentDependency.IsNsDependency
-						|| unit.IsLibrary)
-					);
+				var lines = unit.CodeLines;
+
+				if ((!unit.IsNamespaceDependency && !unit.IsLibrary) && _options.UnitTransform != null)
+				{
+					lines = _options.UnitTransform.Transform(lines, ns);
+				}
+
+				if ((!unit.IsNamespaceDependency && !unit.IsLibrary) && _options.OutputFormatter != null)
+				{
+					lines = _options.OutputFormatter.Format(lines);
+				}
+
+				code.AddRange(lines);
 			}
 
-			return code.ToString();
+			return string.Join("\n", code);
 		}
 	}
 }

@@ -8,12 +8,12 @@ namespace Bygg.Parser
 	{
 		private readonly string _namespaceMatchPattern;
 
-		public NamespaceParser(String namespaceMatchPattern)
+		public NamespaceParser(string namespaceMatchPattern)
 		{
 			_namespaceMatchPattern = namespaceMatchPattern;
 		}
 
-		public String Parse(IList<String> codeLines)
+		public string Parse(IEnumerable<string> codeLines)
 		{
 			foreach (var line in codeLines)
 			{
@@ -24,7 +24,7 @@ namespace Bygg.Parser
 				}
 			}
 
-			return String.Empty;
+			return string.Empty;
 		}
 	}
 }

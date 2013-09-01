@@ -6,6 +6,6 @@ namespace Bygg.Output.Combine
 {
 	public interface IOutputCombiner
 	{
-		String Combine(IList<CodeUnit> units, String ns);
+		string Combine(IEnumerable<CodeUnit> units, string ns);
 	}
 }

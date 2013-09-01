@@ -9,7 +9,7 @@ namespace Bygg.Input
 	{
 		public FileReader(string path) : base(path) {}
 
-		public override IList<String> ReadLines()
+		public override IList<string> ReadLines()
 		{
 			return File.ReadLines(Path).ToList();
 		}

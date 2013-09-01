@@ -11,7 +11,7 @@ namespace Bygg.Output.Minify
 			_minifier = new Microsoft.Ajax.Utilities.Minifier();
 		}
 
-		public String Minify(String code)
+		public string Minify(string code)
 		{
 			return _minifier.MinifyJavaScript(code);
 		}

@@ -12,7 +12,7 @@ namespace Bygg.Units
 		public static event ResolvedEvent Resolved;
 		public delegate void ResolvedEvent(object sender, ResolvedEventArgs args);
 
-		private void OnResolve(String resolved)
+		private void OnResolve(string resolved)
 		{
 			if (Resolved != null)
 			{
@@ -21,17 +21,24 @@ namespace Bygg.Units
 		}
 
 		private readonly DependencyParser _parser;
-		private readonly Dependency _nsDependency;
+		private readonly Dependency _namespaceDependency;
 
 		public readonly Dependency CurrentDependency;
-		public IList<String> CodeLines { get; private set; }
+		public IList<string> CodeLines { get; private set; }
 		public readonly IList<CodeUnit> Dependencies = new List<CodeUnit>();
 
-		public readonly bool IsLibrary;
+		public bool IsNamespaceDependency { 
+			get
+			{
+				return CurrentDependency.IsNamespaceDependency;
+			} 
+		}
+		
+		public bool IsLibrary { get; private set; }
 
-		public CodeUnit(Dependency currentDependency, Dependency nsDependency, DependencyParser parser, bool isLibrary = false)
+		public CodeUnit(Dependency currentDependency, Dependency namespaceDependency, DependencyParser parser, bool isLibrary = false)
 		{
-			_nsDependency = nsDependency;
+			_namespaceDependency = namespaceDependency;
 			_parser = parser;
 
 			CurrentDependency = currentDependency;
@@ -50,9 +57,9 @@ namespace Bygg.Units
 
 			var dependencies = _parser.Parse(CodeLines);
 
-			if (!CurrentDependency.IsNsDependency && !IsLibrary)
+			if (!IsNamespaceDependency && !IsLibrary)
 			{
-				dependencies.Add(_nsDependency);
+				dependencies.Add(_namespaceDependency);
 			}
 
 			foreach (var dependency in dependencies)
@@ -67,7 +74,7 @@ namespace Bygg.Units
 				}
 				else
 				{
-					var newUnit = new CodeUnit(dependency, _nsDependency, _parser, CurrentDependency.IsNsDependency);
+					var newUnit = new CodeUnit(dependency, _namespaceDependency, _parser, CurrentDependency.IsNamespaceDependency);
 
 					Dependencies.Add(newUnit);
 					resolvedUnits.Add(newUnit);

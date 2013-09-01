@@ -6,22 +6,12 @@ namespace Bygg.Output.Transform
 {
 	public class JsCommonsTransform : IOutputTransform
 	{
-		private readonly IOutputFormatter _formatter;
-
-		public JsCommonsTransform(IOutputFormatter formatter)
+		public IList<string> Transform(IList<string> codeLines, string ns)
 		{
-			_formatter = formatter;
-		}
+			codeLines.Insert(0, string.Format(@"(function({0}) {{", ns));
+			codeLines.Add(string.Format(@"}})({0} || ({0} = {{}}));", ns));
 
-		public String Transform(IList<String> codeLines, String ns, bool isNsDependency)
-		{
-			if (!isNsDependency)
-			{
-				codeLines.Insert(0, String.Format(@"(function({0}) {{", ns));
-				codeLines.Add(String.Format(@"}})({0} || ({0} = {{}}));", ns));
-			}
-
-			return _formatter.Format(codeLines, !isNsDependency);
+			return codeLines;
 		}
 	}
 }

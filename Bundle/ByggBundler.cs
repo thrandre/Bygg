@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Web;
 using System.Web.Optimization;
 using Bygg.Build;
@@ -8,6 +9,11 @@ namespace Bygg.Bundle
 {
 	public class ByggBundler : IBundleTransform
 	{
+		public ByggBundler()
+		{
+			
+		}
+
 		public void Process(BundleContext context, BundleResponse response)
 		{
 			if (response.Files.Count() != 1)
@@ -23,6 +29,8 @@ namespace Bygg.Bundle
 					{
 						RootDependency = rootDependency
 					});
+
+			builder.ProgressEvent += (sender, args) => Debug.WriteLine(args.Message);
 
 			var content = builder.Build(true);
 
