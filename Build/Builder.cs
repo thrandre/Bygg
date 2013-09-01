@@ -85,7 +85,6 @@ namespace Bygg.Build
 
 		private void BuildRootUnit()
 		{
-<<<<<<< HEAD
 			OnProgress("Building root unit");
 			_rootUnit = new CodeUnit
 				(
@@ -95,31 +94,13 @@ namespace Bygg.Build
 				);
 
 			OnProgress("Resolving dependencies");
-=======
-			_rootUnit = new CodeUnit
-			(
-				_options.RootDependency, 
-				_namespaceDependency, 
-				_options.DependencyParser
-			);
-			
->>>>>>> b9ddae65e1b60b36fda9e7d799a270d9918f43de
 			_rootUnit.ResolveDependencies();
 		}
 
 		private void SortDependencyGraph()
 		{
-<<<<<<< HEAD
 			OnProgress("Sorting dependency graph");
 			var sort = new TopologicalSort<CodeUnit>(_rootUnit, parent => parent.Dependencies);
-=======
-			var sort = new TopologicalSort<CodeUnit>
-			(
-				_rootUnit, 
-				parent => parent.Dependencies
-			);
-			
->>>>>>> b9ddae65e1b60b36fda9e7d799a270d9918f43de
 			_orderedUnitList = sort.Sort();
 		}
 
@@ -140,7 +121,6 @@ namespace Bygg.Build
 
 		private void GetNamespaceDependency()
 		{
-<<<<<<< HEAD
 			var rootDependencies = _options
 				.DependencyParser.Parse
 					(
@@ -148,14 +128,6 @@ namespace Bygg.Build
 							.GetReaderFor(_options.RootDependency)
 							.ReadLines()
 					);
-=======
-			var rootDependencies = _options.DependencyParser.Parse
-			(
-				SourceCodeReader
-					.GetReaderFor(_options.RootDependency)
-					.ReadLines()
-			);
->>>>>>> b9ddae65e1b60b36fda9e7d799a270d9918f43de
 
 			var nsDependency = rootDependencies
 				.FirstOrDefault(d => d.IsNamespaceDependency);
